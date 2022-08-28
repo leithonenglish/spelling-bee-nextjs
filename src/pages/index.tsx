@@ -164,6 +164,7 @@ const Home: NextPage = () => {
 
   const onRestartClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    setAnswer("");
     reset();
   };
 

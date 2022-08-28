@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useSpring, animated } from "react-spring";
+import { useSpring, animated, easings } from "react-spring";
 import classNames from "classnames";
 import { useComb } from "src/context/word";
 import { CollectedWord, StorageName } from "src/types";
@@ -21,6 +21,12 @@ const Welcome = () => {
     onRest: () => {
       setVisible(false);
     },
+  });
+
+  const welcomeStyle = useSpring({
+    to: { opacity: 1, y: 0 },
+    from: { opacity: 0, y: 100 },
+    config: { duration: 400, easing: easings.easeInOutQuad },
   });
 
   const resetGame = () => {
@@ -60,11 +66,12 @@ const Welcome = () => {
       style={styles}
     >
       {mounted && (
-        <div
+        <animated.div
           className={classNames("flex flex-col items-center mx-auto max-w-xl", {
             "gap-10": !continuing,
             "gap-28 md:gap-40": continuing,
           })}
+          style={welcomeStyle}
         >
           <div
             className={classNames("flex flex-col justify-center items-center", {
@@ -116,7 +123,7 @@ const Welcome = () => {
             </div>
             <p className="text-center font-light">Edited by Leithon English</p>
           </div>
-        </div>
+        </animated.div>
       )}
     </animated.div>
   );
