@@ -16,7 +16,7 @@ It's just like the old Spelling Bee with a few tweaks:
 5. It was made by `ME` (probably the biggest difference)
 
 Give it a try and tell me what you think!
-[Spelling Bee](https://calm-crepe-f49431.netlify.app)
+[Spelling Bee](https://spelling-bee-nextjs.vercel.app)
 
 Add an `.env` file with:
 
