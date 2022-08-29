@@ -4,7 +4,8 @@
 
 A clone of [The New York Times Spelling Bee](https://www.nytimes.com/puzzles/spelling-bee) that I tried for fun.
 
-<img width="863" alt="Screenshot 2022-08-15 at 10 36 35 AM" src="https://user-images.githubusercontent.com/7442937/184669193-864d5e58-d65f-40b7-83d9-d11dbe9846c0.png">
+![Screenshot 2022-08-28 at 8 56 34 PM](https://user-images.githubusercontent.com/7442937/187107966-183bb0c9-a6bb-40b8-8699-ff5418b593c1.png)
+
 
 It's just like the old Spelling Bee with a few tweaks:
 
