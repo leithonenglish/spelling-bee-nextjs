@@ -8,7 +8,7 @@ const ProgressBar = ({ percentage = 0 }: ProgressBarProps) => {
   const progression = useMemo(() => {
     const progressions = [
       {
-        text: `Your just getting started`,
+        text: `You're just getting started`,
         gradient: `from-red-400 to-red-200`,
       },
       { text: `Ooh! Good job!`, gradient: `from-red-500 to-red-300` },
@@ -24,7 +24,7 @@ const ProgressBar = ({ percentage = 0 }: ProgressBarProps) => {
         gradient: `from-violet-500 to-pink-500`,
       },
       {
-        text: `💪🏽 You coming up on the final lap!`,
+        text: `💪🏽 coming up on the final lap!`,
         gradient: `from-pink-500 to-orange-300`,
       },
       { text: `Almost There!`, gradient: `from-orange-300 to-yellow-300` },
@@ -39,7 +39,7 @@ const ProgressBar = ({ percentage = 0 }: ProgressBarProps) => {
   return (
     <div className="flex flex-col gap-2 items-center w-full min-w-[200px]">
       <span className="flex-shrink-0 font-bold text-slate-700">
-        {percentage === 0 ? `Comon' you can do it!` : progression.text}
+        {percentage === 0 ? `C'mon' you can do it!` : progression.text}
       </span>
       <div className="flex-auto w-full h-3 bg-slate-100 rounded-lg">
         {percentage > 0 && (
