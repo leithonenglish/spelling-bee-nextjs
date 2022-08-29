@@ -39,7 +39,7 @@ const ProgressBar = ({ percentage = 0 }: ProgressBarProps) => {
   return (
     <div className="flex flex-col gap-2 items-center w-full min-w-[200px]">
       <span className="flex-shrink-0 font-bold text-slate-700">
-        {percentage === 0 ? `C'mon' you can do it!` : progression.text}
+        {percentage === 0 ? `C'mon you can do it!` : progression.text}
       </span>
       <div className="flex-auto w-full h-3 bg-slate-100 rounded-lg">
         {percentage > 0 && (
