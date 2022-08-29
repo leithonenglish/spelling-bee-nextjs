@@ -7,14 +7,16 @@ import Head from "next/head";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import type { AppRouter } from "../server/router";
+import { CombProvider } from "src/context/word";
+import Header from "src/components/Header";
 import "@fontsource/inter/200.css";
 import "@fontsource/inter/300.css";
 import "@fontsource/inter";
 import "@fontsource/inter/700.css";
-import "@fontsource/hepta-slab/500.css";
-import "@fontsource/hepta-slab/700.css";
+import "@fontsource/hepta-slab";
+import "@fontsource/zilla-slab/700.css";
+import "@fontsource/grenze-gotisch/700.css";
 import "../styles/globals.css";
-import { CombProvider } from "src/context/word";
 
 const MyApp: AppType = ({
   Component,
@@ -32,14 +34,7 @@ const MyApp: AppType = ({
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <div className="flex flex-col h-full">
-          <div className="w-full border-b border-slate-300 p-6">
-            <div className="flex flex-col gap-2 w-full h-full max-w-[1080px] mx-auto">
-              <h1 className="text-4xl font-slab font-bold">Spelling Bee</h1>
-              <h2 className="text-sm text-slate-700 font-light">
-                Edited by Leithon English
-              </h2>
-            </div>
-          </div>
+          <Header />
           <div className="relative flex-auto flex">
             <Component {...pageProps} />
           </div>

@@ -32,6 +32,11 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@fontsource/grenze-gotisch@^4.5.9":
+  version "4.5.9"
+  resolved "https://registry.yarnpkg.com/@fontsource/grenze-gotisch/-/grenze-gotisch-4.5.9.tgz#68dc6161d3748d2c2b6e6fc7fb9012ca28153342"
+  integrity sha512-mMPqLKjwso9dNvb2JrfmhH6OdEJK1sAKix+n/cZdO80fpkKbisADJU1h3mpT3MoCjc8921w7cW8gTY/SsEuIng==
+
 "@fontsource/hepta-slab@^4.5.10":
   version "4.5.10"
   resolved "https://registry.yarnpkg.com/@fontsource/hepta-slab/-/hepta-slab-4.5.10.tgz#aa858e360071078c2c13245f543ac709c8f1d0da"
@@ -41,6 +46,11 @@
   version "4.5.12"
   resolved "https://registry.yarnpkg.com/@fontsource/inter/-/inter-4.5.12.tgz#a6236379bf710658db048d7087ec588754962cb6"
   integrity sha512-bGKk4/8tube/nCk8hav0ZDBVbzJzc7m0Vt4xF5p15IN4YImwGdtKG38Oq5bU8xHNS+VfvbFFCepgQNj7Pr/Lvg==
+
+"@fontsource/zilla-slab@^4.5.9":
+  version "4.5.9"
+  resolved "https://registry.yarnpkg.com/@fontsource/zilla-slab/-/zilla-slab-4.5.9.tgz#67951da49bc4149f1a15a01173cde3022fa3490e"
+  integrity sha512-gTZSx1DEribXaB1uDEddqr6DhEoikUuM5SAOx1OwdSmg+Im2y97fAYxbJzFUZ+AX8seLCAIP2uT5RS4J3nOG4g==
 
 "@humanwhocodes/config-array@^0.10.4":
   version "0.10.4"
@@ -1304,6 +1314,11 @@ grapheme-splitter@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/grapheme-splitter/-/grapheme-splitter-1.0.4.tgz#9cf3a665c6247479896834af35cf1dbb4400767e"
   integrity sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==
+
+hamburger-react@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/hamburger-react/-/hamburger-react-2.5.0.tgz#7c0148af8f02f3b693564d69e590d02db8ffc221"
+  integrity sha512-5GSXe+ucxTPJ0SkhIsPQ/PRDweZPIKya1lfahAuExx31SdheeUA4uOPfQIAirbKona8hvo79VDr5LJQzPXsdpw==
 
 has-bigints@^1.0.1, has-bigints@^1.0.2:
   version "1.0.2"
