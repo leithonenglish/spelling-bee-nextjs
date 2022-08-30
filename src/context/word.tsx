@@ -3,6 +3,7 @@ import { CollectedWord, HiveCache, StorageName } from "src/types";
 import { trpc } from "src/utils/trpc";
 
 type CombContextProps = {
+  initializing: boolean;
   collectedWords: Array<CollectedWord>;
   setup: () => void;
   initialize: () => void;
@@ -12,6 +13,7 @@ type CombContextProps = {
 } & HiveCache;
 
 const CombContext = React.createContext<CombContextProps>({
+  initializing: false,
   cells: [],
   core: "",
   answerCount: 0,
@@ -31,26 +33,29 @@ const CombProvider = ({ children }: { children: React.ReactNode }) => {
     []
   );
 
-  const { refetch: initialize } = trpc.useQuery(["word.initialize"], {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    enabled: false,
-    onSuccess(data) {
-      if (data) {
-        setCore(data.core);
-        setCells(data.cells);
-        setAnswerCount(data.answerCount);
-        localStorage.setItem(
-          StorageName.HIVE,
-          JSON.stringify({
-            core: data.core,
-            cells: data.cells,
-            answerCount: data.answerCount,
-          })
-        );
-      }
-    },
-  });
+  const { refetch: initialize, isLoading: initializing } = trpc.useQuery(
+    ["word.initialize"],
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      enabled: false,
+      onSuccess(data) {
+        if (data) {
+          setCore(data.core);
+          setCells(data.cells);
+          setAnswerCount(data.answerCount);
+          localStorage.setItem(
+            StorageName.HIVE,
+            JSON.stringify({
+              core: data.core,
+              cells: data.cells,
+              answerCount: data.answerCount,
+            })
+          );
+        }
+      },
+    }
+  );
 
   const reset = () => {
     localStorage.removeItem(StorageName.COLLECTED_WORD);
@@ -91,6 +96,7 @@ const CombProvider = ({ children }: { children: React.ReactNode }) => {
     reset,
     shuffle,
     updateCollection,
+    initializing,
     core,
     cells,
     answerCount,

@@ -30,6 +30,7 @@ import loadingBeeAnimation from "src/data/loading-bee.json";
 
 const Home: NextPageWithLayout = () => {
   const {
+    initializing,
     cells,
     core,
     answerCount,
@@ -102,7 +103,7 @@ const Home: NextPageWithLayout = () => {
     config: { duration: 500 },
   });
 
-  const loaderTransition = useTransition(checkingAnswer, {
+  const loaderTransition = useTransition(checkingAnswer || initializing, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     delay: 200,
