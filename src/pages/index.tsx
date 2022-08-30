@@ -10,8 +10,9 @@ import React, {
   ReactElement,
 } from "react";
 import { flushSync } from "react-dom";
-import { useSpring, animated } from "react-spring";
+import { useSpring, animated, useTransition } from "react-spring";
 import { Icon } from "@iconify/react";
+import Lottie from "lottie-react";
 import classNames from "classnames";
 import GameLayout from "src/layouts/game";
 import {
@@ -25,6 +26,7 @@ import {
 import { AnswerStatus } from "src/types";
 import { trpc } from "src/utils/trpc";
 import { useComb } from "src/context/word";
+import loadingBeeAnimation from "src/data/loading-bee.json";
 
 const Home: NextPageWithLayout = () => {
   const {
@@ -48,7 +50,7 @@ const Home: NextPageWithLayout = () => {
     [collectedWords, answerCount]
   );
 
-  const { refetch: checkAnswer } = trpc.useQuery(
+  const { refetch: checkAnswer, isLoading: checkingAnswer } = trpc.useQuery(
     ["word.isAnswer", { cells, core, word: answer }],
     {
       refetchOnWindowFocus: false,
@@ -91,6 +93,20 @@ const Home: NextPageWithLayout = () => {
       },
     }
   );
+
+  const { tada } = useSpring({
+    reverse: false,
+    tada: 0,
+    onStart: () => setToasting(true),
+    onRest: () => setAnswer(``),
+    config: { duration: 500 },
+  });
+
+  const loaderTransition = useTransition(checkingAnswer, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    delay: 500,
+  });
 
   const onInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -176,14 +192,6 @@ const Home: NextPageWithLayout = () => {
     reset();
   };
 
-  const { tada } = useSpring({
-    reverse: false,
-    tada: 0,
-    onStart: () => setToasting(true),
-    onRest: () => setAnswer(``),
-    config: { duration: 500 },
-  });
-
   const AnimatedHighlightedInput = animated(HighlightedInput);
 
   useEffect(() => {
@@ -199,6 +207,19 @@ const Home: NextPageWithLayout = () => {
   return (
     <>
       <div className="flex-auto w-full flex flex-col gap-1 justify-start items-center max-w-[1080px] mx-auto pt-7 md:justify-center md:px-10 md:pt-10 md:flex-row md:gap-16">
+        {loaderTransition(
+          (styles, show) =>
+            show && (
+              <animated.div
+                className="fixed z-[999] flex items-center justify-center top-0 left-0 h-full w-full bg-white/80"
+                style={styles}
+              >
+                <div className="bg-white rounded-full">
+                  <Lottie animationData={loadingBeeAnimation} loop={true} />
+                </div>
+              </animated.div>
+            )
+        )}
         <div
           className={classNames(
             "relative max-w-[340px] pb-5 order-2 md:order-1 md:pb-11 md:w-[80vw]",
@@ -273,7 +294,6 @@ const Home: NextPageWithLayout = () => {
           </form>
         </div>
         <div className="relative z-40 flex flex-col gap-5 w-full px-5 pb-10 order-1 md:order-2 md:w-[40%] md:px-0 md:h-full md:pb-16">
-          Is: {JSON.stringify(toasting)}
           <ProgressBar percentage={progress} />
           <WordList words={collectedWords} />
         </div>
