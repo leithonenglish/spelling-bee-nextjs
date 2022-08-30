@@ -51,7 +51,7 @@ const Home: NextPageWithLayout = () => {
     [collectedWords, answerCount]
   );
 
-  const { refetch: checkAnswer, isLoading: checkingAnswer } = trpc.useQuery(
+  const { refetch: checkAnswer, isFetching: checkingAnswer } = trpc.useQuery(
     ["word.isAnswer", { cells, core, word: answer }],
     {
       refetchOnWindowFocus: false,

@@ -33,7 +33,7 @@ const CombProvider = ({ children }: { children: React.ReactNode }) => {
     []
   );
 
-  const { refetch: initialize, isLoading: initializing } = trpc.useQuery(
+  const { refetch: initialize, isFetching: initializing } = trpc.useQuery(
     ["word.initialize"],
     {
       refetchOnWindowFocus: false,
