@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useSpring, animated, easings, useSprings } from "react-spring";
 import classNames from "classnames";
 import { useComb } from "src/context/word";
@@ -20,6 +20,7 @@ const Welcome = () => {
     config: { duration: 300 },
     onRest: () => {
       setVisible(false);
+      window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
     },
   });
 
