@@ -68,6 +68,7 @@ const Home: NextPageWithLayout = () => {
             `collectedWords`,
             JSON.stringify(newCollectedWords)
           );
+          setToasting(true);
           updateCollection(newCollectedWords);
           setAnswerPoints(points);
           setAnswer(``);
@@ -271,7 +272,8 @@ const Home: NextPageWithLayout = () => {
             </div>
           </form>
         </div>
-        <div className="flex flex-col gap-5 w-full px-5 pb-10 order-1 md:order-2 md:w-[40%] md:px-0 md:h-full md:pb-16">
+        <div className="relative z-40 flex flex-col gap-5 w-full px-5 pb-10 order-1 md:order-2 md:w-[40%] md:px-0 md:h-full md:pb-16">
+          Is: {JSON.stringify(toasting)}
           <ProgressBar percentage={progress} />
           <WordList words={collectedWords} />
         </div>
