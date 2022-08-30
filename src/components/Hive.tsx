@@ -39,7 +39,7 @@ const Hive = memo(
     }, [typedLetter, currentWord]);
 
     return (
-      <div className="w-[90%] my-6 mx-auto">
+      <div className="w-[70%] my-6 mx-auto sm:w-[90%]">
         <div className="relative w-full pb-[103.92305%]">
           <Comb
             text={core}

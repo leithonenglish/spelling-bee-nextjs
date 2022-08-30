@@ -12,6 +12,7 @@ import React, {
 import { flushSync } from "react-dom";
 import { useSpring, animated } from "react-spring";
 import { Icon } from "@iconify/react";
+import classNames from "classnames";
 import GameLayout from "src/layouts/game";
 import {
   Hive,
@@ -37,6 +38,7 @@ const Home: NextPageWithLayout = () => {
     updateCollection,
   } = useComb();
   const [loaded, setLoaded] = useState(false);
+  const [toasting, setToasting] = useState(false);
   const [typedLetter, setTypedLetter] = useState<string | null>(null);
   const [answer, setAnswer] = useState(``);
   const [answerStatus, setAnswerStatus] = useState<AnswerStatus | null>(null);
@@ -56,11 +58,11 @@ const Home: NextPageWithLayout = () => {
         if (data) {
           const points = answerStatus === AnswerStatus.OMG ? 14 : answer.length;
           const newCollectedWords = [
-            ...collectedWords,
             {
               text: `${answer[0]?.toUpperCase()}${answer.substring(1)}`,
               points,
             },
+            ...collectedWords,
           ];
           localStorage.setItem(
             `collectedWords`,
@@ -101,10 +103,12 @@ const Home: NextPageWithLayout = () => {
         setAnswerStatus(null);
       }
       flushSync(() => {
-        if (event.which >= 65 && event.which <= 90) {
+        const regex = new RegExp("^[a-zA-Z ]+$");
+        if (regex.test(event.key)) {
           setTypedLetter(event.key);
         } else {
           setTypedLetter(null);
+          event.preventDefault();
         }
       });
     },
@@ -150,6 +154,7 @@ const Home: NextPageWithLayout = () => {
   const onToastDone = () => {
     setAnswerStatus(null);
     setAnswerPoints(null);
+    setToasting(false);
   };
 
   const onDeleteClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -173,6 +178,7 @@ const Home: NextPageWithLayout = () => {
   const { tada } = useSpring({
     reverse: false,
     tada: 0,
+    onStart: () => setToasting(true),
     onRest: () => setAnswer(``),
     config: { duration: 500 },
   });
@@ -192,7 +198,12 @@ const Home: NextPageWithLayout = () => {
   return (
     <>
       <div className="flex-auto w-full flex flex-col gap-1 justify-start items-center max-w-[1080px] mx-auto pt-7 md:justify-center md:px-10 md:pt-10 md:flex-row md:gap-16">
-        <div className="relative max-w-[340px] pb-5 order-2 md:order-1 md:pb-11 md:w-[80vw]">
+        <div
+          className={classNames(
+            "relative max-w-[340px] pb-5 order-2 md:order-1 md:pb-11 md:w-[80vw]",
+            { "z-50": toasting }
+          )}
+        >
           <form onSubmit={onFormSubmit} className="flex flex-col">
             {answerStatus !== null && (
               <div className="relative">
@@ -260,7 +271,7 @@ const Home: NextPageWithLayout = () => {
             </div>
           </form>
         </div>
-        <div className="flex flex-col gap-5 w-full px-10 pb-10 order-1 md:order-2 md:w-[40%] md:px-0 md:h-full md:pb-16">
+        <div className="flex flex-col gap-5 w-full px-5 pb-10 order-1 md:order-2 md:w-[40%] md:px-0 md:h-full md:pb-16">
           <ProgressBar percentage={progress} />
           <WordList words={collectedWords} />
         </div>

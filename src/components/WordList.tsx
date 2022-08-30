@@ -2,6 +2,7 @@ import { memo, useState } from "react";
 import { Icon } from "@iconify/react";
 import classNames from "classnames";
 import { CollectedWord } from "src/types";
+import { animated, useTransition } from "react-spring";
 
 type WordListProps = {
   words: Array<CollectedWord>;
@@ -9,22 +10,31 @@ type WordListProps = {
 
 const WordList = memo(({ words }: WordListProps) => {
   const [open, setOpen] = useState(false);
+  const wordTransitions = useTransition(words, {
+    from: { opacity: 0, x: -30 },
+    enter: { opacity: 1, x: 0 },
+  });
   return (
     <div
       className={classNames(
-        "relative z-10 flex-auto border border-gray-300 p-5 md:overflow-auto md:rounded",
+        "relative z-10 flex-auto border border-gray-300 p-3 md:p-5 md:overflow-auto md:rounded",
         { "rounded-t": open, rounded: !open }
       )}
     >
       {words.length > 0 ? (
         <>
           <div
-            className="flex justify-between items-center md:hidden -m-5 p-5"
+            className="flex justify-between items-center gap-1 md:hidden -m-5 p-5"
             onClick={() => setOpen(!open)}
           >
-            <p className="text-sm font-thin">
-              You have found {words.length} word{words.length > 1 ? "s" : ""}.
-            </p>
+            <div className="relative flex gap-2 text-sm font-thin w-full overflow-hidden">
+              {wordTransitions((styles, word) => (
+                <animated.span style={styles} key={word.text}>
+                  {word.text}
+                </animated.span>
+              ))}
+              <div className="absolute top-0 right-0 h-full w-[10%] bg-white/90"></div>
+            </div>
             <Icon
               icon="ph:caret-down-bold"
               className={classNames("text-xl transition-transform transform", {
@@ -35,7 +45,7 @@ const WordList = memo(({ words }: WordListProps) => {
           </div>
           <ul
             className={classNames(
-              "absolute p-5 border border-gray-300 bg-white rounded-b top-[60px] left-[-1px] right-[-1px] flex-col gap-3 transition-[height,opacity] md:opacity-100 md:top-auto md:right-auto md:left-auto md:h-auto md:relative md:flex md:p-0 md:border-none",
+              "absolute p-5 border border-gray-300 bg-white rounded-b top-[44px] left-[-1px] right-[-1px] flex-col gap-3 transition-[height,opacity] md:opacity-100 md:top-auto md:right-auto md:left-auto md:h-auto md:relative md:flex md:p-0 md:border-none",
               {
                 "opacity-100 overflow-auto h-[65vh]": open,
                 "opacity-0 h-0 overflow-hidden": !open,
