@@ -105,7 +105,7 @@ const Home: NextPageWithLayout = () => {
   const loaderTransition = useTransition(checkingAnswer, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
-    delay: 500,
+    delay: 200,
   });
 
   const onInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
