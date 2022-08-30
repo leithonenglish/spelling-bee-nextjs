@@ -14,6 +14,9 @@ module.exports = {
       transitionProperty: {
         "color-transform": "background, color, border-color, fill, transform",
       },
+      screens: {
+        xs: { raw: "(min-height: 375px)" },
+      },
     },
   },
   plugins: [],

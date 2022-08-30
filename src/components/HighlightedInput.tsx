@@ -39,7 +39,9 @@ const HighlightedInput = forwardRef<HTMLDivElement, HighlightedInputProps>(
         if (document.activeElement !== inputRef.current) {
           onKeyDown(event);
         }
-        inputRef.current.focus();
+        if (!event.metaKey && !event.altKey && !event.shiftKey) {
+          inputRef.current.focus();
+        }
       };
 
       document.body.addEventListener(`keydown`, onBodyKeyDown);

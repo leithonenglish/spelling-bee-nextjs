@@ -72,7 +72,7 @@ const Welcome = () => {
             "flex flex-col items-center max-w-xl mx-auto lg:max-w-none",
             {
               "gap-5": !continuing,
-              "gap-28 md:gap-40": continuing,
+              "gap-10 md:gap-40": continuing,
             }
           )}
         >
@@ -86,13 +86,13 @@ const Welcome = () => {
             <Image
               alt="bee"
               src="/bee-icon.svg"
-              height={continuing ? 48 : 100}
-              width={continuing ? 48 : 100}
+              height={continuing ? 72 : 100}
+              width={continuing ? 72 : 100}
             />
             <h1
-              className={classNames("font-bold font-zillaSlab", {
+              className={classNames("text-center font-bold font-zillaSlab", {
                 "text-5xl md:text-6xl": !continuing,
-                "text-xl": continuing,
+                "text-3xl": continuing,
               })}
             >
               Spelling Bee

@@ -84,6 +84,7 @@ const CombProvider = ({ children }: { children: React.ReactNode }) => {
   const updateCollection = (words: Array<CollectedWord>) => {
     setCollectedWords(words);
   };
+
   const value = {
     setup,
     initialize,
