@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSpring, animated, easings, useSprings } from "react-spring";
 import classNames from "classnames";
 import { useComb } from "src/context/word";
