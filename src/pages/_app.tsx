@@ -1,14 +1,13 @@
 // src/pages/_app.tsx
+import { ReactElement } from "react";
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import { loggerLink } from "@trpc/client/links/loggerLink";
 import { withTRPC } from "@trpc/next";
 import { SessionProvider } from "next-auth/react";
-import Head from "next/head";
+import { AppPropsWithLayout } from "next-layout";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import type { AppRouter } from "../server/router";
-import { CombProvider } from "src/context/word";
-import Header from "src/components/Header";
 import "@fontsource/inter/200.css";
 import "@fontsource/inter/300.css";
 import "@fontsource/inter";
@@ -21,25 +20,11 @@ import "../styles/globals.css";
 const MyApp: AppType = ({
   Component,
   pageProps: { session, ...pageProps },
-}) => {
+}: AppPropsWithLayout) => {
+  const getLayout = Component.getLayout || ((page: ReactElement) => page);
   return (
     <SessionProvider session={session}>
-      <CombProvider>
-        <Head>
-          <title>Spelling Bee | Leithon English</title>
-          <meta
-            name="description"
-            content="A NY Spelling Bee Clone by Leithon English"
-          />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <div className="flex flex-col h-full">
-          <Header />
-          <div className="relative flex-auto flex">
-            <Component {...pageProps} />
-          </div>
-        </div>
-      </CombProvider>
+      {getLayout(<Component {...pageProps} />)}
     </SessionProvider>
   );
 };

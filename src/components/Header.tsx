@@ -30,14 +30,6 @@ const Header = () => {
           </Link>
         </div>
       </div>
-      <div className="w-full border-b border-slate-300 p-6">
-        <div className="flex flex-col gap-2 w-full h-full max-w-[1080px] mx-auto">
-          <h1 className="text-5xl font-zillaSlab font-bold">Spelling Bee</h1>
-          <h2 className="text-sm text-black font-light">
-            Edited by Leithon English
-          </h2>
-        </div>
-      </div>
     </>
   );
 };

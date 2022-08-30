@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import { NextPageWithLayout } from "next-layout";
 import React, {
   useState,
   useMemo,
@@ -7,10 +7,12 @@ import React, {
   FormEvent,
   MouseEvent,
   useEffect,
+  ReactElement,
 } from "react";
 import { flushSync } from "react-dom";
 import { useSpring, animated } from "react-spring";
 import { Icon } from "@iconify/react";
+import GameLayout from "src/layouts/game";
 import {
   Hive,
   HighlightedInput,
@@ -23,7 +25,7 @@ import { AnswerStatus } from "src/types";
 import { trpc } from "src/utils/trpc";
 import { useComb } from "src/context/word";
 
-const Home: NextPage = () => {
+const Home: NextPageWithLayout = () => {
   const {
     cells,
     core,
@@ -266,6 +268,10 @@ const Home: NextPage = () => {
       <Welcome />
     </>
   );
+};
+
+Home.getLayout = (page: ReactElement) => {
+  return <GameLayout>{page}</GameLayout>;
 };
 
 export default Home;
