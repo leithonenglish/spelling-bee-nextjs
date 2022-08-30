@@ -34,7 +34,7 @@ const Header = () => {
       <div className="sticky top-0 z-[52] flex justify-between items-center border-b border-gray-300 bg-white mb-3">
         <div className="flex gap-2 w-full md:w-auto">
           <Hamburger toggled={isOpen} toggle={setOpen} size={22} />
-          <div className="flex-auto flex justify-center items-center gap-[5px] ml-[-48px]">
+          <div className="flex-auto flex justify-center items-center gap-[5px] ml-[-48px] md:ml-0">
             <span className="font-display font-bold text-3xl">LE</span>
             <span className="border-l border-slate-400 h-5 mt-1 md:border-l-2"></span>
             <span className="font-zillaSlab font-bold text-3xl tracking-[-0.5px]">
