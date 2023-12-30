@@ -1,0 +1,15 @@
+export enum AnswerStatus {
+  EMPTY = -6,
+  ALREADY_FOUND,
+  MISSING_CENTER,
+  BAD_WORD,
+  TOO_SHORT,
+  TOO_LONG,
+  NOT_A_WORD,
+  GOOD,
+  GREAT,
+  AWESOME,
+  PANGRAM,
+  WOW,
+  OMG,
+}
