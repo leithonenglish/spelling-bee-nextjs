@@ -1,34 +1,39 @@
 'use client';
 import { useMemo } from 'react';
-import { animated, useSpring } from 'react-spring';
+import { AnimationResult, animated, useTransition } from '@react-spring/web';
 import { AnswerStatus } from '@/types';
+import clsx from 'clsx';
 
 type ToastProps = {
-  status: AnswerStatus;
+  status?: AnswerStatus | null;
   points: number | null;
   onDone: () => void;
 };
 
 const Toast = ({ status, points, onDone }: ToastProps) => {
-  const isError = useMemo(() => status < AnswerStatus.GOOD, [status]);
+  const isError = useMemo(
+    () => !status || (status && status < AnswerStatus.GOOD),
+    [status]
+  );
 
-  const messageAnimationStyle = useSpring({
-    to: [
-      { opacity: 1, y: -30 },
-      { opacity: 0, y: -10 },
-    ],
-    from: { opacity: 1, y: 0 },
+  const messageTransition = useTransition(status, {
+    from: { opacity: 0, y: 0 },
+    enter: { opacity: 1, y: -30 },
+    leave: { opacity: 0, y: -10 },
+    onRest(result: AnimationResult) {
+      if (!points && result.finished && (result.value as any).opacity === 1) {
+        onDone();
+      }
+    },
   });
 
-  const pointsAnimationStyle = useSpring({
+  const pointsTransition = useTransition(points, {
     delay: 100,
-    to: [
-      { opacity: 1, y: -5 },
-      { opacity: 0, y: 0 },
-    ],
-    from: { opacity: 1, y: 5, x: 5 },
-    onResolve(result) {
-      if (result.finished) {
+    from: { opacity: 0, y: 5, x: 5 },
+    enter: { opacity: 1, y: -5 },
+    leave: { opacity: 1, y: 0 },
+    onRest(result: AnimationResult) {
+      if (result.finished && (result.value as any).opacity === 1) {
         onDone();
       }
     },
@@ -50,24 +55,31 @@ const Toast = ({ status, points, onDone }: ToastProps) => {
     [AnswerStatus.OMG]: `OMG!`,
   };
 
-  return (
-    <animated.div className='relative' style={messageAnimationStyle}>
-      <span
-        className={`whitespace-nowrap rounded px-3 py-2 text-sm font-light text-white shadow-md ${
-          isError ? 'bg-slate-800' : 'bg-emerald-500'
-        }`}
-      >
-        {messages[status]}
-      </span>
-      {points && (
-        <animated.span
-          className='absolute left-full font-light'
-          style={pointsAnimationStyle}
-        >
-          +{points}
-        </animated.span>
-      )}
-    </animated.div>
+  return messageTransition(
+    (styles, value) =>
+      !!value && (
+        <animated.div className='relative' style={styles}>
+          <span
+            className={clsx([
+              'whitespace-nowrap rounded px-3 py-2 text-sm font-light text-white shadow-md',
+              isError ? 'bg-slate-800' : 'bg-emerald-500',
+            ])}
+          >
+            {messages[value]}
+          </span>
+          {pointsTransition(
+            (pstyle, pvalue) =>
+              pvalue && (
+                <animated.span
+                  className='absolute left-full font-light'
+                  style={pstyle}
+                >
+                  +{points}
+                </animated.span>
+              )
+          )}
+        </animated.div>
+      )
   );
 };
 

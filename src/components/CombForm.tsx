@@ -9,13 +9,13 @@ import {
   useState,
 } from 'react';
 import { flushSync } from 'react-dom';
-import { animated, useSpring, useTransition } from 'react-spring';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { animated, easings, useSpring, useTransition } from '@react-spring/web';
+import { useMutation } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { AnswerStatus } from '@/types';
 import { Icon } from '@iconify/react';
 import Lottie from 'lottie-react';
-import loadingBeeAnimation from '@/data/loading-bee.json';
+import loadingBeeAnimation from '@/data/loading-hive.json';
 import { useComb } from '@/context/comb';
 import HighlightedInput from './HighlightedInput';
 import ProgressBar from './ProgressBar';
@@ -73,7 +73,6 @@ export default function CombForm() {
           'collectedWords',
           JSON.stringify(newCollectedWords)
         );
-        setToasting(true);
         updateCollection(newCollectedWords);
         setAnswerPoints(points);
         setAnswer('');
@@ -99,16 +98,20 @@ export default function CombForm() {
   const { tada } = useSpring({
     reverse: false,
     tada: 0,
-    onStart: () => setToasting(true),
-    onRest: () => setAnswer(''),
     config: { duration: 500 },
+    onStart: () => setToasting(true),
+    onRest: (result) => {
+      if (result.finished) {
+        setAnswer('');
+      }
+    },
   });
 
   const loaderTransition = useTransition(
     checkAnswerMutation.status === 'pending' || status === 'buzzing',
     {
-      from: { opacity: 0 },
-      enter: { opacity: 1 },
+      from: { opacity: 0, scale: 0.6 },
+      enter: { opacity: 1, scale: 1 },
       delay: 200,
     }
   );
@@ -121,8 +124,10 @@ export default function CombForm() {
   const onKeyDown = useCallback(
     (event: KeyboardEvent | React.KeyboardEvent) => {
       if (answerStatus !== null) {
-        setAnswerPoints(null);
         setAnswerStatus(null);
+      }
+      if (answerPoints !== null) {
+        setAnswerPoints(null);
       }
       flushSync(() => {
         const regex = new RegExp('^[a-zA-Z ]+$');
@@ -134,7 +139,7 @@ export default function CombForm() {
         }
       });
     },
-    [answerStatus]
+    [answerStatus, answerPoints]
   );
 
   const onCombSelected = useCallback((letter: string) => {
@@ -144,6 +149,7 @@ export default function CombForm() {
   const onFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
     const allLetters = [...cells, core];
+    setToasting(true);
     if (answer.length < 1) {
       setAnswerStatus(AnswerStatus.EMPTY);
       return;
@@ -173,11 +179,11 @@ export default function CombForm() {
     tada.set(1);
   };
 
-  const onToastDone = () => {
+  const onToastDone = useCallback(() => {
     setAnswerStatus(null);
     setAnswerPoints(null);
     setToasting(false);
-  };
+  }, []);
 
   const onDeleteClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -186,16 +192,22 @@ export default function CombForm() {
     }
   };
 
-  const onShuffleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    shuffle();
-  };
+  const onShuffleClick = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      shuffle();
+    },
+    [shuffle]
+  );
 
-  const onRestartClick = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setAnswer('');
-    reset();
-  };
+  const onRestartClick = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      setAnswer('');
+      reset();
+    },
+    [reset]
+  );
 
   const AnimatedHighlightedInput = animated(HighlightedInput);
 
@@ -206,8 +218,9 @@ export default function CombForm() {
       setLoaded(true);
     }
   }, [loaded, setup]);
+
   return (
-    <div className='mx-auto flex w-full max-w-[1080px] flex-auto flex-col items-center justify-start gap-1 pt-7 md:flex-row md:justify-center md:gap-16 md:px-10 md:pt-10'>
+    <div className='mx-auto flex w-full max-w-[1080px] flex-auto flex-col items-center gap-1 pt-7 md:flex-row md:justify-center md:gap-16 md:px-10 md:pt-10'>
       {loaderTransition(
         (styles, show) =>
           show && (
@@ -215,8 +228,12 @@ export default function CombForm() {
               className='fixed left-0 top-0 z-[999] flex h-full w-full items-center justify-center bg-white/80'
               style={styles}
             >
-              <div className='rounded-full bg-white'>
-                <Lottie animationData={loadingBeeAnimation} loop={true} />
+              <div className='h-[200px] w-[200px] md:h-[300px] md:w-[300px]'>
+                <Lottie
+                  animationData={loadingBeeAnimation}
+                  loop={true}
+                  height={100}
+                />
               </div>
             </animated.div>
           )
@@ -228,17 +245,15 @@ export default function CombForm() {
         )}
       >
         <form onSubmit={onFormSubmit} className='flex flex-col'>
-          {answerStatus !== null && (
-            <div className='relative'>
-              <div className='absolute bottom-0 left-1/2 -translate-x-1/2'>
-                <Toast
-                  status={answerStatus}
-                  points={answerPoints}
-                  onDone={onToastDone}
-                />
-              </div>
+          <div className='relative'>
+            <div className='absolute bottom-0 left-1/2 -translate-x-1/2'>
+              <Toast
+                status={answerStatus}
+                points={answerPoints}
+                onDone={onToastDone}
+              />
             </div>
-          )}
+          </div>
           <AnimatedHighlightedInput
             value={answer}
             mainLetter={core}
@@ -248,11 +263,7 @@ export default function CombForm() {
             style={{
               translateX: tada.to({
                 range: [0, 0.065, 0.185, 0.315, 0.435, 1],
-                output: [0, '-6px', '5px', '-3px', '2px', '0'],
-              }),
-              rotateY: tada.to({
-                range: [0, 0.065, 0.185, 0.315, 0.435, 1],
-                output: [0, -9, 7, -5, 3, 0],
+                output: ['0', '-6px', '5px', '-3px', '2px', '0'],
               }),
             }}
           />
@@ -294,7 +305,7 @@ export default function CombForm() {
           </div>
         </form>
       </div>
-      <div className='relative z-40 order-1 flex w-full flex-col gap-5 px-5 pb-10 md:order-2 md:h-full md:w-[40%] md:px-0 md:pb-16'>
+      <div className='relative z-50 order-1 flex w-full flex-col gap-5 px-5 pb-10 md:order-2 md:h-full md:w-[40%] md:px-0 md:pb-16'>
         <ProgressBar percentage={progress} />
         <WordList words={collectedWords} />
       </div>

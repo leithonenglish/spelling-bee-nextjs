@@ -3,8 +3,7 @@ import pangrams from '@/data/pangrams.json';
 import words from '@/data/words.json';
 
 const generateAnswers = (core: string, cells: Array<string>) => {
-  const letterRegex = `[${cells.join('')}${core}]*`;
-  const answerRegex = new RegExp(`^${letterRegex}${core}+${letterRegex}$`, `g`);
+  const answerRegex = new RegExp(`^(?=.*${core})[${core}${cells}]{4,}$`, `i`);
   return words.filter((word) => answerRegex.test(word));
 };
 
@@ -34,7 +33,6 @@ export async function POST(request: Request) {
   const input = validator.safeParse(params);
   if (input.success) {
     const answers = generateAnswers(input.data.core, input.data.cells);
-    console.log(answers);
     return Response.json(answers.includes(input.data.word));
   }
   return Response.json(false);

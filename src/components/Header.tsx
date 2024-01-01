@@ -35,23 +35,26 @@ const Header = () => {
       <div className='sticky top-0 z-[52] mb-3 flex items-center justify-between border-b border-gray-300 bg-white'>
         <div className='flex w-full gap-2 md:w-auto'>
           <Hamburger toggled={isOpen} toggle={setOpen} size={22} />
-          <div className='ml-[-48px] flex flex-auto items-center justify-center gap-[5px] md:ml-0'>
+          <Link
+            href='/'
+            className='ml-[-48px] flex flex-auto items-center justify-center gap-[5px] md:ml-0'
+          >
             <span className='font-display text-3xl font-bold'>LE</span>
             <span className='mt-1 h-5 border-l border-slate-400 md:border-l-2'></span>
             <span className='font-zillaSlab text-3xl font-bold tracking-[-0.5px]'>
               Games
             </span>
-          </div>
+          </Link>
         </div>
         <div className='hidden justify-between gap-2 p-4 md:flex'>
           <Link
             href='/sign-up'
-            className='rounded-[3px] border border-black bg-black px-8 py-[8px] text-center text-[11px] font-bold uppercase tracking-[0.09em] text-white transition-colors hover:bg-slate-700'
+            className='rounded-[3px] border border-black bg-black px-8 py-[8px] text-center text-[11px] font-bold uppercase tracking-[0.09em] text-white transition-colors hover:bg-slate-800'
           >
             Sign Up
           </Link>
           <Link
-            href='/sign-up'
+            href='/login'
             className='rounded-[3px] border border-black bg-white px-8 py-[8px] text-center text-[11px] font-bold uppercase tracking-[0.09em] transition-colors hover:bg-black hover:text-white'
           >
             Log In
@@ -75,6 +78,7 @@ const Header = () => {
             <ul className='list-disc pl-4 marker:text-amber-400'>
               <li>NextJs</li>
               <li>TanStack Query</li>
+              <li>React Spring</li>
               <li>TailwindCSS</li>
             </ul>
             <p>
@@ -104,12 +108,12 @@ const Header = () => {
         <div className='flex flex-shrink-0 justify-evenly gap-4 p-4 md:hidden'>
           <Link
             href='/sign-up'
-            className='w-full rounded-[3px] border border-black bg-black px-8 py-3 text-center text-[11px] font-bold uppercase tracking-[0.09em] text-white transition-colors hover:bg-slate-700'
+            className='w-full rounded-[3px] border border-black bg-black px-8 py-3 text-center text-[11px] font-bold uppercase tracking-[0.09em] text-white transition-colors hover:bg-slate-800'
           >
             Sign Up
           </Link>
           <Link
-            href='/sign-up'
+            href='/login'
             className='w-full rounded-[3px] border border-black bg-white px-8 py-3 text-center text-[11px] font-bold uppercase tracking-[0.09em] transition-colors hover:bg-black hover:text-white'
           >
             Log In

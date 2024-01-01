@@ -1,6 +1,6 @@
 'use client';
 import { memo, useState } from 'react';
-import { animated, useTransition } from 'react-spring';
+import { animated, useTransition } from '@react-spring/web';
 import clsx from 'clsx';
 import { Icon } from '@iconify/react';
 import { CollectedWord } from '@/types';
@@ -48,7 +48,8 @@ const WordList = memo(({ words }: WordListProps) => {
             className={clsx(
               'absolute left-[-1px] right-[-1px] top-[44px] flex-col gap-3 rounded-b border border-gray-300 bg-white p-5 transition-[height,opacity] md:relative md:left-auto md:right-auto md:top-auto md:flex md:h-auto md:border-none md:p-0 md:opacity-100',
               {
-                'h-[65vh] overflow-auto opacity-100': open,
+                'h-screen max-h-[calc(65vh-20px)] min-h-full overflow-auto opacity-100':
+                  open,
                 'h-0 overflow-hidden opacity-0': !open,
               }
             )}
