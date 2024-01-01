@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center"><img src="https://user-images.githubusercontent.com/7442937/184669530-e8e1ee85-891d-462a-9de2-a68a5ba12f14.svg" alt="Spelling Bee" /></p>
 
-## Getting Started
+# Spelling Bee
 
-First, run the development server:
+A clone of [The New York Times Spelling Bee](https://www.nytimes.com/puzzles/spelling-bee) that I tried for fun.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+![Screenshot](https://user-images.githubusercontent.com/7442937/187107966-183bb0c9-a6bb-40b8-8699-ff5418b593c1.png)
+
+It's just like the old Spelling Bee with a few tweaks:
+
+1. You can start over at any time
+2. The cursor can be moved anywhere in the textbox
+3. The words are completely random (and kinda hard too if I'm being honest)
+4. Minor style changes
+
+Give it a try and tell me what you think!
+[Spelling Bee](https://spelling-bee-nextjs.vercel.app)
+
+Run the app locally
+
+```sh
+bun i
+bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## The Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [NextJS](https://nextjs.org/)
+- [Next-Auth.js](https://next-auth.js.org)
+- [Drizzle ORM](https://orm.drizzle.team/)
+- [TailwindCSS](https://tailwindcss.com)
+- [React Spring](https://react-spring.dev/)
