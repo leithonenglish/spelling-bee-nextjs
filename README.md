@@ -14,7 +14,7 @@ It's just like the old Spelling Bee with a few tweaks:
 4. Minor style changes
 
 Give it a try and tell me what you think!
-[Spelling Bee](https://spelling-bee-nextjs.vercel.app)
+[Spelling Bee](https://spelling-bee-nextjs-one.vercel.app/)
 
 Run the app locally
 
